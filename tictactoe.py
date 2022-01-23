@@ -30,8 +30,18 @@ def empty_tile(board, tile):
     else:
         return False
 
+
 def update_board(board, tile, pl):
     board[tile-1] = pl
+
+
+# FUNCTION TO CHECK IF 'X' OR 'O' HAS WON AFTER EVERY TURN
+def check_winner(board, win_list):
+    for combo in win_list:
+        if board[combo[0]] != " " and board[combo[0]] == board[combo[1]] and board[combo[0]] == board[combo[2]]:
+            return True
+
+    return False
 
 
 # FUNCTION TO INITILIAZE AND PLAY GAME
@@ -43,25 +53,29 @@ def play_game():
     empty_space = " "
     players = ["X", "O"]
     pl = players[0]
+    winner = False
 
     # SET WHILE LOOP TO KEEP PLAYING WHILE THERE'S AN EMPTY SPACE ON THE BOARD OR UNTIL A WINNING CONDITION IS MET
-    while empty_space in game_board:
+    while empty_space in game_board or winner == False:
         display_board(game_board)
         tile = player_input(pl)
         # CHECK IF BOARD CONTAINS EMPTY SPACE - IF TRUE, UPDATE BOARD AND SWITCH PLAYER, OTHERWISE REDO PLAYER INPUT
         if empty_tile(game_board, tile):
             update_board(game_board, tile, pl)
-            if pl == players[0]:
-                pl = players[1]
-            elif pl == players[1]:
-                pl = players[0]
+            if check_winner(game_board, win_list):
+                winner = pl
+                display_board(game_board)
+                print(f"GAME OVER: {winner} HAS WON!")
+                break
+            else:
+                if pl == players[0]:
+                    pl = players[1]
+                elif pl == players[1]:
+                    pl = players[0]
         else:
             print("Tile is already taken. Try Again.")
-
-    winner = pl
    
-    display_board(game_board)
-    print(f"GAME OVER: {winner} HAS WON!")
+    print("GAME OVER: TIE")
 
 # START GAME
 play_game()
