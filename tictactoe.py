@@ -18,12 +18,14 @@ def player_input(player):
 
     while i.isdigit() == False or i not in acc_range:
         i = input("Select location [1-9]: ")
+        if i.isdigit() and i in acc_range:
+            return int(i)
+        else:
+            print("Invalid Input: Try Again")
 
-    return int(i)
 
-
-def update_board(board, player_input):
-
+def update_board(board, tile, pl):
+    board[tile-1] = pl
 
 
 # FUNCTION TO INITILIAZE AND PLAY GAME
@@ -33,14 +35,24 @@ def play_game():
     # DEFINE INITIAL BOARD WITH BLANK SPACES AND SET FIRST PLAYER AS 'X'
     game_board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
     empty_space = " "
-    pl = "X"
+    players = ["X", "O"]
+    pl = players[0]
 
     # SET WHILE LOOP TO KEEP PLAYING WHILE THERE'S AN EMPTY SPACE ON THE BOARD OR UNTIL A WINNING CONDITION IS MET
     while empty_space in game_board:
         display_board(game_board)
-        player_input(pl)
+        tile = player_input(pl)
+        update_board(game_board, tile, pl)
+        # AFTER BOARD UPDATE, SWITCH PLAYERS
+        if pl == players[0]:
+            pl = players[1]
+        elif pl == players[1]:
+            pl = players[0]
 
-
+    winner = pl
+   
+    display_board(game_board)
+    print(f"GAME OVER: {winner} HAS WON!")
 
 # START GAME
 play_game()
