@@ -24,6 +24,12 @@ def player_input(player):
             print("Invalid Input: Try Again")
 
 
+def empty_tile(board, tile):
+    if board[tile-1] == " ":
+        return True
+    else:
+        return False
+
 def update_board(board, tile, pl):
     board[tile-1] = pl
 
@@ -42,12 +48,15 @@ def play_game():
     while empty_space in game_board:
         display_board(game_board)
         tile = player_input(pl)
-        update_board(game_board, tile, pl)
-        # AFTER BOARD UPDATE, SWITCH PLAYERS
-        if pl == players[0]:
-            pl = players[1]
-        elif pl == players[1]:
-            pl = players[0]
+        # CHECK IF BOARD CONTAINS EMPTY SPACE - IF TRUE, UPDATE BOARD AND SWITCH PLAYER, OTHERWISE REDO PLAYER INPUT
+        if empty_tile(game_board, tile):
+            update_board(game_board, tile, pl)
+            if pl == players[0]:
+                pl = players[1]
+            elif pl == players[1]:
+                pl = players[0]
+        else:
+            print("Tile is already taken. Try Again.")
 
     winner = pl
    
