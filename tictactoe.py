@@ -1,10 +1,14 @@
+import os
+
+clear = lambda: os.system('clear')
+
 # FUNCTION FOR DISPLAY BOARD STATE
 def display_board(board):
-    print(f"| {board[0]} | {board[1]} | {board[2]} |       | 1 | 2 | 3 |")
+    print(f"| {board[6]} | {board[7]} | {board[8]} |       | 7 | 8 | 9 |")
     print("-------------       -------------")
     print(f"| {board[3]} | {board[4]} | {board[5]} |       | 4 | 5 | 6 |")
     print("-------------       -------------")
-    print(f"| {board[6]} | {board[7]} | {board[8]} |       | 7 | 8 | 9 |")
+    print(f"| {board[0]} | {board[1]} | {board[2]} |       | 1 | 2 | 3 |")
 
 
 def player_input(player):
@@ -56,9 +60,10 @@ def play_game():
     winner = False
 
     # SET WHILE LOOP TO KEEP PLAYING WHILE THERE'S AN EMPTY SPACE ON THE BOARD OR UNTIL A WINNING CONDITION IS MET
-    while empty_space in game_board or winner == False:
+    while empty_space in game_board and winner == False:
         display_board(game_board)
         tile = player_input(pl)
+        clear()
         # CHECK IF BOARD CONTAINS EMPTY SPACE - IF TRUE, UPDATE BOARD AND SWITCH PLAYER, OTHERWISE REDO PLAYER INPUT
         if empty_tile(game_board, tile):
             update_board(game_board, tile, pl)
@@ -75,6 +80,7 @@ def play_game():
         else:
             print("Tile is already taken. Try Again.")
    
+    display_board(game_board)
     print("GAME OVER: TIE")
 
 # START GAME
