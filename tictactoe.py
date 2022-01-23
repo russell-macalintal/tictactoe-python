@@ -50,6 +50,7 @@ def check_winner(board, win_list):
 
 # FUNCTION TO INITILIAZE AND PLAY GAME
 def play_game():
+    clear()
     # DEFINE EIGHT POSSIBLE WINNING CONDITIONS
     win_list = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
     # DEFINE INITIAL BOARD WITH BLANK SPACES AND SET FIRST PLAYER AS 'X'
@@ -79,9 +80,16 @@ def play_game():
                     pl = players[0]
         else:
             print("Tile is already taken. Try Again.")
-   
-    display_board(game_board)
-    print("GAME OVER: TIE")
+    
+    if check_winner(game_board, win_list) == False:
+        display_board(game_board)
+        print("GAME OVER: TIE")
+
+    a = input("Play again? (Y/N) ")
+    if a == 'y' or a == 'Y':
+        play_game()
+
+
 
 # START GAME
 play_game()
